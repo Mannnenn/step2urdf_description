@@ -1,0 +1,10 @@
+<launch>
+    <!--TortoiseBotのURDFモデルをパラメータサーバにロードする-->
+    <param name = "robot_description" textfile = "$(find step2urdf_description)/urdf/step2urdf.urdf"/>
+
+    <!--空のワールドでGazeboを開始する-->
+    <include file = "$(find gazebo_ros)/launch/empty_world.launch"/>
+    <rosparam file="$(find step2urdf_description)/launch/controller.yaml" command="load" />
+    <!--GazeboでTortoiseBotを生成し，パラメータサーバからのその記述を受ける-->
+    <node name = "spawn_urdf" pkg = "gazebo_ros" type = "spawn_model" args = "-param robot_description -urdf -model tortoisebot"/>
+</launch>

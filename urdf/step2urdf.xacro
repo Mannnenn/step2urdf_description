@@ -1,0 +1,310 @@
+<?xml version="1.0" ?>
+<robot name="step2urdf" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+
+  <material name="gray">
+    <color rgba="0.5 0.5 0.5 2.5"/>
+  </material>
+  <material name="red">
+    <color rgba="1.0 0.0 0.0 2.5"/>
+  </material>
+  <material name="silver_default">
+    <color rgba="0.700 0.700 0.700 1.000"/>
+  </material>
+  <material name="opaque202209238">
+    <color rgba="0.792156862745098 0.8196078431372549 0.9333333333333333 1.0"/>
+  </material>
+  <material name="black">
+    <color rgba="0.4 0.4 0.4 1.0"/>
+  </material>
+
+  <link name="base_link"/>
+  <joint name="body_joint" type="fixed">
+    <parent link="base_link"/>
+    <child  link="body_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="body_link">
+    <inertial>
+      <origin xyz="-0.0797893829175013 0.021321971265732098 0.19796992913112318" rpy="0 0 0"/>
+      <mass value="44.96014807733396"/>
+      <inertia ixx="0.70697" iyy="0.773527" izz="1.085054" ixy="0.086557" iyz="0.015459" ixz="0.093364"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://step2urdf_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="opaque202209238"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://step2urdf_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <gazebo reference="body_link">
+    <material>Gazebo/Gray</material>
+  </gazebo>
+
+  <link name="Wheel_R">
+    <inertial>
+      <origin xyz="5.904390531910397e-06 0.031875191382541246 2.7755575615628914e-17" rpy="0 0 0"/>
+      <mass value="34.12618496286369"/>
+      <inertia ixx="0.201769" iyy="0.36795" izz="0.201766" ixy="-0.0" iyz="0.0" ixz="-0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.0 0.2287 -0.143" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://step2urdf_description/meshes/Link_1_v1_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="opaque202209238"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.0 0.2287 -0.143" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://step2urdf_description/meshes/Link_1_v1_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Wheel_R_joint" type="continuous">
+    <origin xyz="0.0 -0.2287 0.143" rpy="0 0 0"/>
+    <parent link="body_link"/>
+    <child link="Wheel_R"/>
+    <axis xyz="0.0 1.0 0.0"/>
+  </joint>
+  <gazebo reference="Wheel_R_link">
+    <material>Gazebo/Red</material>
+    <mu1 value="2.5" />
+    <mu2 value="2.5" />
+    <kp value="50000" />
+    <kd value="10" />
+  </gazebo>
+  <transmission name="Wheel_R_trans" type="SimpleTransmission">
+    <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="Wheel_R_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    <joint name="Wheel_R_joint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+
+
+
+  <link name="Wheel_L">
+    <inertial>
+      <origin xyz="2.3801841665793685e-06 -0.03187519138254108 5.403383278868024e-06" rpy="0 0 0"/>
+      <mass value="34.12618496286369"/>
+      <inertia ixx="0.201766" iyy="0.36795" izz="0.201768" ixy="0.0" iyz="0.0" ixz="1e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.0 -0.2287 -0.143" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://step2urdf_description/meshes/Link_2_v1_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="opaque202209238"/>
+    </visual>
+    <collision>
+      <origin xyz="0.0 -0.2287 -0.143" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://step2urdf_description/meshes/Link_2_v1_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Wheel_L_joint" type="continuous">
+    <origin xyz="0.0 0.2287 0.143" rpy="0 0 0"/>
+    <parent link="body_link"/>
+    <child link="Wheel_L"/>
+    <axis xyz="0.0 1.0 -0.0"/>
+  </joint>
+  <gazebo reference="Wheel_L_link">
+    <material>Gazebo/Red</material>
+    <mu1 value="2.5" />
+    <mu2 value="2.5" />
+    <kp value="50000" />
+    <kd value="10" />
+  </gazebo>
+  <transmission name="Wheel_L_trans" type="SimpleTransmission">
+    <type>transmission_interface/SimpleTransmission</type>
+      <actuator name="Wheel_L_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    <joint name="Wheel_L_joint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+
+
+  <!-- キャスターの作成 -->
+  <link name="caster">
+    <visual>
+      <geometry>
+        <sphere radius="0.093"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="black">
+        <color rgba="0.0 1.0 0.0 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0.0"/>
+      <geometry>
+        <sphere radius="0.093"/>
+      </geometry>
+    </collision>
+    <!--慣性-->
+    <inertial>
+        <mass value="0.5"/>
+        <inertia ixx="3.000e-4" iyy="3.000e-4" izz="3.000e-4" ixy="0" ixz="0" iyz="0"/>
+    </inertial>
+  </link>
+	<joint name="caster_joint" type="fixed">
+    <origin xyz="-0.332 0 0.096" rpy="0 0 0"/>
+    <parent link="body_link"/>
+    <child link="caster"/>
+	</joint>
+	<gazebo reference="caster">
+		<mu1>0.0</mu1>
+		<mu2>0.0</mu2>
+		<material>Gazebo/Green</material>
+	</gazebo>
+
+
+
+  <!-- Lidar台の作成 -->
+  <link name="lidar_base">
+    <visual>
+      <geometry>
+        <box size="0.03 0.03 0.27"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="opaque202209238"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0.0"/>
+      <geometry>
+        <box size="0.1 0.1 0.1"/>
+      </geometry>
+    </collision>
+    <!--慣性-->
+    <inertial>
+        <mass value="0.15"/>
+        <inertia ixx="0.25" iyy="0.25" izz="0.25" ixy="0" ixz="0" iyz="0"/>
+    </inertial>
+  </link>
+  <joint name="lidar_base_joint" type="fixed">
+    <origin xyz="-0.362 -0.235 0.393" rpy="0 0 0"/>
+    <parent link="body_link"/>
+    <child link="lidar_base"/>
+  </joint>
+	<gazebo reference="lidar_base">
+		<mu1>0.0</mu1>
+		<mu2>0.0</mu2>
+		<material>Gazebo/Yellow</material>
+	</gazebo>
+
+  <!-- Lidarの作成 -->
+  <link name="lidar_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.05" length="0.05"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="purple">
+        <color rgba="1.0 0.0 1.0 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0.0"/>
+      <geometry>
+        <cylinder radius="0.05" length="0.05"/>
+      </geometry>
+    </collision>
+    <!--慣性-->
+    <inertial>
+        <mass value="0.15"/>
+        <inertia ixx="0.125" iyy="0.125" izz="0.188" ixy="0" ixz="0" iyz="0"/>
+    </inertial>
+  </link>
+  <joint name="lidar_joint" type="fixed">
+    <origin xyz="0.0 0.0 0.155" rpy="0 0 0"/>
+    <parent link="lidar_base"/>
+    <child link="lidar_link"/>
+  </joint>
+	<gazebo reference="lidar_link">
+		<mu1>0.0</mu1>
+		<mu2>0.0</mu2>
+		<material>Gazebo/Purple</material>
+	</gazebo>
+
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/dtw_robot</robotNamespace>
+    </plugin>
+  </gazebo>
+
+  <!--レーザセンサを定義する-->
+  <gazebo reference="lidar_link">
+    <sensor type="ray" name="rpLiDAR">
+    <!--sensor type="gpu_ray" name="hokuyo"-->
+      <pose>0 0 0 0 0 0 </pose>
+      <visualize>true</visualize>
+      <update_rate>40</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>720</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.14</min_angle>
+            <max_angle>3.14</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.10</min>
+          <max>6.0</max>
+          <resolution>0.01</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <!-- Noise parameters based on published spec for Hokuyo laser
+               achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
+               stddev of 0.01m will put 99.7% of samples within 0.03m of the true
+               reading. -->
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <!--レーザセンサのためのプラグインを指定-->
+      <plugin name="laser" filename="libgazebo_ros_laser.so">
+      <!--plugin name="gpu_laser" filename="libgazebo_ros_gpu_laser.so"-->
+        <topicName>/scan</topicName>
+        <frameName>lidar_link</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+<!--機能的な部分をロードするための追加要素-->
+  <gazebo>
+    <!--差動駆動プラグインを指定-->
+    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+      <!--left_wheel_jointとright_wheel_jointをそれぞれ左関節右関節に指定-->
+      <leftJoint>Wheel_L_joint</leftJoint>
+      <rightJoint>Wheel_R_joint</rightJoint>
+      <!--台座であるbase_linkをrobotBaseFrameに指定-->
+      <robotBaseFrame>body</robotBaseFrame>
+      <!--トレッドを0.25m，車輪直径0.07mとする-->
+      <wheelSeparation>0.400</wheelSeparation>
+      <wheelDiameter>0.286</wheelDiameter>
+      <!--車輪の状態を配信する設定にする-->
+      <publishWheelJointState>true</publishWheelJointState>
+    </plugin>
+    <!--関節状態配信プラグインを指定-->
+  </gazebo>
+
+
+
+</robot>
